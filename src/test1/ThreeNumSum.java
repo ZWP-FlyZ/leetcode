@@ -43,7 +43,6 @@ public class ThreeNumSum {
     	int[] tmparr = new int[3];
     	if(nums==null || (n=nums.length)<3) return res;
     	
-    	List<Integer> tmp = null;
     	
     	Arrays.sort(nums);
     	System.err.println(Arrays.toString(nums));
