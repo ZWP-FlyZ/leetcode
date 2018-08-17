@@ -38,15 +38,67 @@ public class ArrEqueSumSub {
     	return helper1(nums,0,sum[n-1]/2);
     }
     
-   
+
+    public static boolean helper2(int[] nums,int[] x,int sum) {
+    	int cw=0,r=sum*2;
+    	int n=nums.length,i=0;
+    	while(true) {
+    		while(i<n&&cw+nums[i]<=sum) {
+    			cw+=nums[i];
+    			x[i]=1;
+    			r-=nums[i];
+    			i++;
+    		}
+    		
+    		if(cw==sum)return true; // 全加结束
+    		else if(i>=n) return false;
+    		else {
+    			// 进入右子树
+    			x[i]=0;
+    			r-=nums[i];
+    			i++;
+    		}
+    		
+    		
+    		while(cw+r<sum) {
+    			// 剪支回溯
+    			i--;
+    			while(i>-1&&x[i]==0) {
+    				r+=nums[i];
+    				i--;
+    			}
+    			if(i==-1) return false;
+    			x[i]=0;
+    			cw-=nums[i];
+    			i++;
+    		}		
+    	}
+
+    }
+    
+    public static boolean canPartition2(int[] nums) {
+        if(nums.length<2)return false;
+        else if(nums.length==2) return nums[0]==nums[1];
+        
+        int sum=0,n=nums.length;
+        int[]  x = new int[n];
+        for(int i=0;i<n;i++) sum+=nums[i];
+        if(sum%2!=0)return false;
+
+        boolean res = helper2(nums,x,sum/2);
+        System.err.println(Arrays.toString(x));
+    	return res;
+    }
+    
+    
     
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		int[] a = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,100};
+		int[] a = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,100};
 		int[] b= {100,99,1};
 		System.err.println(a.length);
-		System.err.println(canPartition1(b));
+		System.err.println(canPartition2(a));
 	}
 
 }
